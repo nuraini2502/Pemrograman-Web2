@@ -1,12 +1,17 @@
 <?php
-session_start();
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        session_start();
+        $username = $_POST ['username'];
+        $password = $_POST ['password'];
 
-$email = $_POST["email"];
-$password = $_POST["password"];
+        if ($username == 'ammar' && $password == 12345){
+            $_SESSION['username'] = $username;
+            header('location:home.php');
+        }
+        else {
+            $_SESSION['gagal'] = '';
+            header('location:index.php');
 
-if ($email == "admin@gmail.com" and $password == "admin") {
-    $_SESSION["email"] = $email;
-    header("location:home.php");
-} else {
-    header("location:index.php");
-}
+        }
+    } 
+?>

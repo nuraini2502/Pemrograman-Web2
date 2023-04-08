@@ -1,5 +1,14 @@
-<?php 
+<?php ini_set('display_errors', 0);
 require_once '../dbkoneksi.php';
+$_idedit = $_GET['idedit'];
+if (!empty($_idedit)) {
+  $sql = "SELECT * FROM kartu WHERE id=?";
+  $st = $dbh->prepare($sql);
+  $st->execute([$_idedit]);
+  $row = $st->fetch();
+} else {
+  $row = [];
+}
 ?>
             
 <form method="POST" action="proses.php">
@@ -62,9 +71,10 @@ require_once '../dbkoneksi.php';
 
 
   <div class="form-group row">
-    <div class="offset-4 col-8">
-      <input type="submit" name="proses" type="submit" 
-      class="btn btn-primary" value="Simpan"/>
-    </div>
+  <div class="offset-4 col-8">
+              <?php $button = (empty($_idedit)) ? "Simpan" : "Update"; ?>
+              <input type="submit" name="proses" type="submit" class="btn btn-primary" value="<?= $button ?>" />
+              <input type="hidden" name="idedit" value="<?= $_idedit ?>" />
+            </div>
   </div>
 </form>
